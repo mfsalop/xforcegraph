@@ -1,0 +1,108 @@
+type User {
+    _id: ID 
+    nombre: String
+    apellido: String
+    email: String
+    contrasena: String
+    documentType: String
+    documentId: String
+    rol: String
+    Estado: String
+    }
+
+
+type Project {
+    _id: ID
+    codigoProyecto: String
+    nombre: String
+    objGenerales: String
+    objEspecificos: String
+    presupuesto: Int
+    fInicio: Int
+    fFinal: Int
+    estadoProyecto: String
+    fase: String
+    avancesFecha: Int
+    avancesDescripcion: String
+    avancesLeadObserv: String
+    }
+
+input UserInput {
+    nombre: String!
+    apellido: String!
+    email: String!
+    contrasena: String!
+    documentType: String!
+    documentId: String!
+    rol: String!
+    estado: String
+}
+
+input UserStateInput{
+    estado: String
+}
+
+input UserEditInput {
+    nombre: String
+    apellido: String
+    email: String
+    contrasena: String
+    documentId: String
+}
+
+input ProjectInput {
+    codigoProyecto: String!
+    nombre: String!
+    objGenerales: String!
+    objEspecificos: String!
+    presupuesto: Int!
+    fInicio: Int!
+    fFinal: Int!
+    estadoProyecto: String
+    fase: String
+    }
+
+type Course {
+    _id: ID 
+    title: String
+    teacher: String
+    description: String
+    topic: String
+}
+
+type Query {
+    "Devuelve todos los cursos"
+    getUsers: [User]
+    "Devuelve un curso"
+    getUser (id:ID!): User
+}
+
+input CourseInput {
+    title: String!
+    teacher: String
+    description: String!
+    topic: String
+}
+
+input CourseEditInput{
+    title: String
+    teacher: String
+    description: String
+    topic: String
+}
+
+type Mutation {
+    "Crea un curso"
+    createCourse (input: CourseInput!): Course
+    "Editar un curso"
+    editCourse (_id: ID!, input:CourseEditInput): Course
+    "Registra un usuario"
+    registerUser (input: UserInput): User
+    "Autoriza o No Autoriza a un usuario"
+    editUserState (_id: ID!, input:UserStateInput): User
+    "Edita la informacion personal de un usuario"
+    editUserInfo (_id: ID!, input:UserEditInput): User
+
+    "Registra un proyecto"
+    registerProject (input: ProjectInput): Project
+}
