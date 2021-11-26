@@ -8,7 +8,7 @@ type User {
     documentId: String
     rol: String
     Estado: String
-    inscripciones: [Inscriptions]
+    inscriptionUser: [Inscriptions]
     }
 
 type Project {
@@ -75,6 +75,14 @@ input ProjectInput {
     fase: String
     }
 
+input InscriptionsInput {
+    UserID: String!
+    codigoProyecto: String!
+    inscripcionStatus: String
+    fechaIngreso: Int
+    fechaEgreso: Int
+}
+
 input AdvanceInput {
     advanceCode: String!
     codigoProyecto: ID!
@@ -113,6 +121,9 @@ type Mutation {
     "Registra un proyecto"
     registerProject (input: ProjectInput): Project
 
+    "Registra una inscripcion"
+    inscriptionProject (input: InscriptionsInput): Inscriptions
+
     "Adicionar los objetivos"
     addObjetivos(courseID: ID!, personID: ID!): Course
 
@@ -121,4 +132,7 @@ type Mutation {
 
     "Adicionar un avance al proyecto"
     addAdvancetoProject(projectID: ID!, advanceID: ID!): Project
+
+    "Adicionar un avance al usuario"
+    addInscriptiontoUser(userID: ID!, inscriptionID: ID!): User
 }
