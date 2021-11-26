@@ -1,4 +1,4 @@
-registerUser:
+
 mutation {registerUser(input:{
   nombre:"Ashley"
   apellido: "Fuente"
@@ -29,3 +29,13 @@ mutation { registerProject (input:{
   fInicio: 4212022
   fFinal: 4212023
 })
+}
+
+mutation { addAdvance (input:{
+  advanceCode: "A00005"
+  codigoProyecto: "619c5fc160d6e2a752726057"
+  fecha:11232021
+  descripcion:"Descripcion de prueba 5"
+  
+})
+}

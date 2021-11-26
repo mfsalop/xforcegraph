@@ -8,8 +8,8 @@ type User {
     documentId: String
     rol: String
     Estado: String
+    inscripciones: [Inscriptions]
     }
-
 
 type Project {
     _id: ID
@@ -22,10 +22,23 @@ type Project {
     fFinal: Int
     estadoProyecto: String
     fase: String
-    avancesFecha: Int
-    avancesDescripcion: String
-    avancesLeadObserv: String
+    advanceProject: [Advance]
     }
+
+type Advance {
+    _id: ID
+    fecha: Int
+    descripcion: String
+    LeadObserv: String
+}
+
+type Inscriptions {
+    _id : ID
+    codigoProyecto: String
+    inscripcionStatus: String
+    fechaIngreso: Int
+    fechaEgreso: Int
+}
 
 input UserInput {
     nombre: String!
@@ -62,6 +75,14 @@ input ProjectInput {
     fase: String
     }
 
+input AdvanceInput {
+    advanceCode: String!
+    codigoProyecto: ID!
+    fecha: Int!
+    descripcion: String!
+    LeadObserv: String
+}
+
 type Course {
     _id: ID 
     title: String
@@ -77,32 +98,27 @@ type Query {
     getUser (id:ID!): User
 }
 
-input CourseInput {
-    title: String!
-    teacher: String
-    description: String!
-    topic: String
-}
-
-input CourseEditInput{
-    title: String
-    teacher: String
-    description: String
-    topic: String
-}
 
 type Mutation {
-    "Crea un curso"
-    createCourse (input: CourseInput!): Course
-    "Editar un curso"
-    editCourse (_id: ID!, input:CourseEditInput): Course
+    
     "Registra un usuario"
     registerUser (input: UserInput): User
+    
     "Autoriza o No Autoriza a un usuario"
     editUserState (_id: ID!, input:UserStateInput): User
+    
     "Edita la informacion personal de un usuario"
     editUserInfo (_id: ID!, input:UserEditInput): User
 
     "Registra un proyecto"
     registerProject (input: ProjectInput): Project
+
+    "Adicionar los objetivos"
+    addObjetivos(courseID: ID!, personID: ID!): Course
+
+    "Registra un avance"
+    addAdvance (input: AdvanceInput): Advance
+
+    "Adicionar un avance al proyecto"
+    addAdvancetoProject(projectID: ID!, advanceID: ID!): Project
 }
