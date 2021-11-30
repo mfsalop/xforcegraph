@@ -6,8 +6,8 @@ type User {
     contrasena: String
     documentType: String
     documentId: String
-    rol: String
-    Estado: String
+    rol: Rol
+    estado: Estado
     inscriptionUser: [Inscriptions]
     }
 
@@ -20,8 +20,8 @@ type Project {
     presupuesto: Int
     fInicio: Int
     fFinal: Int
-    estadoProyecto: String
-    fase: String
+    estadoProyecto: proyectoEstado
+    fase: Fase
     advanceProject: [Advance]
     }
 
@@ -38,6 +38,7 @@ type Inscriptions {
     inscripcionStatus: String
     fechaIngreso: Int
     fechaEgreso: Int
+    estadoInscription: inscriptionStatus
 }
 
 input UserInput {
@@ -47,12 +48,12 @@ input UserInput {
     contrasena: String!
     documentType: String!
     documentId: String!
-    rol: String!
-    estado: String
+    rol: Rol
+    estado: Estado
 }
 
 input UserStateInput{
-    estado: String
+    estado: Estado
 }
 
 input UserEditInput {
@@ -78,7 +79,7 @@ input ProjectInput {
 input InscriptionsInput {
     UserID: String!
     codigoProyecto: String!
-    inscripcionStatus: String
+    estadoInscription: inscriptionStatus
     fechaIngreso: Int
     fechaEgreso: Int
 }
@@ -106,6 +107,33 @@ type Query {
     getUser (id:ID!): User
 }
 
+enum Rol {
+    Administrador
+    Estudiantes
+    Lider
+}
+
+enum Estado {
+    Pendiente
+    Autorizado
+    No Autorizado
+}
+
+enum proyectoEstado{
+    Activo
+    Inactivo
+}
+
+enum Fase {
+    Iniciado
+    En desarrollo
+    Terminado
+}
+
+enum inscriptionStatus {
+    Aceptada
+    Rechazada
+}
 
 type Mutation {
     
