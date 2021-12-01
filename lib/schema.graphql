@@ -4,7 +4,7 @@ type User {
     apellido: String
     email: String
     contrasena: String
-    documentType: String
+    documentType: typeDocument
     documentId: String
     rol: Rol
     estado: Estado
@@ -72,16 +72,31 @@ input ProjectInput {
     presupuesto: Int!
     fInicio: Int!
     fFinal: Int!
-    estadoProyecto: String
-    fase: String
+    estadoProyecto: proyectoEstado
+    fase: Fase
     }
 
+input EditProjectInput {
+    nombre: String
+    objGenerales: String
+    objEspecificos: String
+    presupuesto: Int
+    fInicio: Int
+    fFinal: Int
+    estadoProyecto: proyectoEstado
+    fase: Fase
+    }
+    
 input InscriptionsInput {
     UserID: String!
     codigoProyecto: String!
     estadoInscription: inscriptionStatus
     fechaIngreso: Int
     fechaEgreso: Int
+}
+
+input InscriptionStateInput{
+    estadoInscription: inscriptionStatus
 }
 
 input AdvanceInput {
@@ -92,18 +107,10 @@ input AdvanceInput {
     LeadObserv: String
 }
 
-type Course {
-    _id: ID 
-    title: String
-    teacher: String
-    description: String
-    topic: String
-}
-
 type Query {
-    "Devuelve todos los cursos"
+    "Devuelve todos los usuarios"
     getUsers: [User]
-    "Devuelve un curso"
+    "Devuelve un usuario"
     getUser (id:ID!): User
 }
 
@@ -116,7 +123,7 @@ enum Rol {
 enum Estado {
     Pendiente
     Autorizado
-    No Autorizado
+    No autorizado
 }
 
 enum proyectoEstado{
@@ -135,6 +142,12 @@ enum inscriptionStatus {
     Rechazada
 }
 
+enum typeDocument {
+    cedula ciudadania
+    pasaporte
+    tarjeta de identidad
+}
+
 type Mutation {
     
     "Registra un usuario"
@@ -149,11 +162,14 @@ type Mutation {
     "Registra un proyecto"
     registerProject (input: ProjectInput): Project
 
+    "Actualiza el proyecto"
+    editProject (_id: ID!, input:EditProjectInput): Project
+
     "Registra una inscripcion"
     inscriptionProject (input: InscriptionsInput): Inscriptions
 
-    "Adicionar los objetivos"
-    addObjetivos(courseID: ID!, personID: ID!): Course
+    "Activo o No activa la inscripcion"
+    editInscriptionState (_id: ID!, input:InscriptionStateInput): Inscriptions
 
     "Registra un avance"
     addAdvance (input: AdvanceInput): Advance
