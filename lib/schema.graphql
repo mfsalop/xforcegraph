@@ -50,7 +50,7 @@ input UserInput {
     apellido: String!
     email: String!
     contrasena: String!
-    documentType: String!
+    documentType: String
     documentId: String!
     rol: String!
     estado: String

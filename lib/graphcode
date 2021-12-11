@@ -1,5 +1,0 @@
-mutation inscriptionProject (_id:"6199b0cfdedcac4e3ba8025a", input:{ 
-codigoProyecto: "ING0001"
-}) 
-}
-
